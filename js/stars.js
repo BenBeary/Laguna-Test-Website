@@ -14,13 +14,20 @@
     const STREAK_DURATION_MS = 1400;
     const STREAK_DELAY_BASE_MS = 550; // matches bob start
 
-    const container = document.querySelector('.hero-logo');
-    if (!container) return;
+    const containers = document.querySelectorAll('.hero-logo, .starfield-host');
+    if (!containers.length) return;
+    containers.forEach(populate);
 
-    const field = document.createElement('div');
-    field.className = 'starfield';
-    field.setAttribute('aria-hidden', 'true');
-    container.insertBefore(field, container.firstChild);
+    function populate(container) {
+        const field = document.createElement('div');
+        field.className = 'starfield';
+        field.setAttribute('aria-hidden', 'true');
+        container.insertBefore(field, container.firstChild);
+        for (let i = 0; i < STAR_COUNT; i++) field.appendChild(makeStar());
+        for (let i = 0; i < SHOOTING_STAR_COUNT; i++) field.appendChild(makeShootingStar(i));
+        field.style.setProperty('--stars-fade', `${STARS_FADE_DURATION_MS}ms`);
+        field.style.setProperty('--streak-duration', `${STREAK_DURATION_MS}ms`);
+    }
 
     function randomBetween(min, max) {
         return Math.random() * (max - min) + min;
@@ -74,15 +81,4 @@
         return el;
     }
 
-    // Populate the field.
-    for (let i = 0; i < STAR_COUNT; i++) {
-        field.appendChild(makeStar());
-    }
-    for (let i = 0; i < SHOOTING_STAR_COUNT; i++) {
-        field.appendChild(makeShootingStar(i));
-    }
-
-    // Expose timing as CSS vars so style.css can match.
-    field.style.setProperty('--stars-fade', `${STARS_FADE_DURATION_MS}ms`);
-    field.style.setProperty('--streak-duration', `${STREAK_DURATION_MS}ms`);
 })();

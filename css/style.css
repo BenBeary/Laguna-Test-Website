@@ -235,6 +235,13 @@ main {
 }
 
 /* ----- Starfield ----- */
+.starfield-host {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
 .starfield {
     position: absolute;
     inset: 0;
@@ -351,6 +358,72 @@ main {
         animation: none;
         opacity: 1;
         transform: none;
+    }
+}
+
+/* ----- About the Team ----- */
+.about-team {
+    width: 55vw;
+    max-width: 55vw;
+    margin: clamp(3rem, 8vh, 6rem) auto 0;
+    padding: 0;
+}
+
+.about-team-title {
+    margin: 0 0 1.5rem;
+    text-align: left;
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.about-team-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 3em;
+    height: 3px;
+    background-color: var(--color-secondary);
+    border-radius: 2px;
+}
+
+.about-team-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 8rem;
+    align-items: center;
+}
+
+.about-team-text p {
+    margin: 0;
+    color: var(--color-text);
+    line-height: 1.6;
+    font-size: 1rem;
+    text-align: justify;
+    hyphens: auto;
+}
+
+.about-team-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .about-team {
+        width: 90vw;
+        max-width: 90vw;
+    }
+    .about-team-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 }
 
