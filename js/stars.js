@@ -1,6 +1,10 @@
 (function () {
-    const STAR_COUNT = 60;
-    const SHOOTING_STAR_COUNT = 0;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const STAR_COUNT = isMobile ? 35 : 60;
+    const SHOOTING_STAR_COUNT = 6;
+    // Vertical bias: higher = more stars clustered near the top.
+    // Desktop uses a softer bias so the tail reaches lower; mobile stays tight.
+    const TOP_BIAS = isMobile ? 2 : 2.5;
 
     // Neon tint to blend toward. Must match --color-neon in style.css.
     const NEON_RGB = [168, 238, 255];
@@ -20,7 +24,7 @@
     const STAR_URL = new URL(`${ROOT}images/svg/star.svg`, document.baseURI).href;
     const SHOOTING_STAR_URL = new URL(`${ROOT}images/svg/shooting-star.svg`, document.baseURI).href;
 
-    const containers = document.querySelectorAll('.hero-logo, .starfield-host');
+    const containers = document.querySelectorAll('.starfield-host');
     if (!containers.length) return;
     containers.forEach(populate);
 
@@ -52,9 +56,10 @@
         el.className = 'star';
         el.style.webkitMaskImage = `url('${STAR_URL}')`;
         el.style.maskImage = `url('${STAR_URL}')`;
-        // Position: anywhere in the hero block.
+        // Position: horizontal is uniform; vertical biases toward the top by
+        // raising a uniform [0,1) to TOP_BIAS power.
         el.style.left = `${randomBetween(2, 98)}%`;
-        el.style.top = `${randomBetween(2, 95)}%`;
+        el.style.top = `${2 + Math.pow(Math.random(), TOP_BIAS) * 93}%`;
         // Size: small variance so the field looks natural.
         const size = randomBetween(6, 14);
         el.style.width = `${size}px`;
@@ -70,15 +75,46 @@
         return el;
     }
 
+    initParallax();
+
+    function initParallax() {
+        const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduce) return;
+
+        const bg = document.querySelector('.bg-parallax');
+        const stars = document.querySelector('.starfield-host');
+        if (!bg && !stars) return;
+
+        const BG_FACTOR = 0.08;
+        const STARS_FACTOR = 0.5;
+
+        let ticking = false;
+        function update() {
+            const y = window.scrollY || window.pageYOffset;
+            if (bg) bg.style.transform = `translate3d(0, ${-y * BG_FACTOR}px, 0)`;
+            if (stars) stars.style.transform = `translate3d(0, ${-y * STARS_FACTOR}px, 0)`;
+            ticking = false;
+        }
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(update);
+            }
+        }, { passive: true });
+        update();
+    }
+
     function makeShootingStar(index) {
         const el = document.createElement('span');
         el.className = 'shooting-star';
         el.style.webkitMaskImage = `url('${SHOOTING_STAR_URL}')`;
         el.style.maskImage = `url('${SHOOTING_STAR_URL}')`;
-        // Spread them across the top half, biased to the upper region of the hero.
+        // Spread them across the top half, biased to the upper region.
+        // Note: .starfield is 200% tall (for parallax headroom), so these
+        // percentages must stay small to keep shooting stars near the top
+        // of the visible viewport.
         el.style.left = `${randomBetween(8, 80)}%`;
-        // Final resting top position (after the streak lands).
-        el.style.top = `${randomBetween(8, 45)}%`;
+        el.style.top = `${randomBetween(4, 22)}%`;
         // Streak length controls size.
         const size = randomBetween(28, 56);
         el.style.width = `${size}px`;

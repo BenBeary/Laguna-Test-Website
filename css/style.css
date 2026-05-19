@@ -14,6 +14,8 @@
 
     --font-body: "Finlandica Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-display: "Chewy", system-ui, sans-serif;
+
+    --content-width: 60vw;
 }
 
 * {
@@ -27,7 +29,20 @@ html, body {
 
 body {
     min-height: 100vh;
-    background-color: var(--color-primary);
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-optical-sizing: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.bg-parallax {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -2;
+    background-color: var(--color-secondary);
     background-image: radial-gradient(
         ellipse 120% 100% at 50% 0%,
         var(--color-bg-top) 0%,
@@ -35,12 +50,8 @@ body {
         var(--color-primary) 75%,
         var(--color-secondary) 100%
     );
-    background-attachment: fixed;
-    color: var(--color-text);
-    font-family: var(--font-body);
-    font-optical-sizing: auto;
-    display: flex;
-    flex-direction: column;
+    background-repeat: no-repeat;
+    will-change: transform;
 }
 
 a {
@@ -56,8 +67,10 @@ a {
 }
 
 .header-inner {
-    width: 100%;
-    padding: 0 var(--space-lg);
+    width: var(--content-width);
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -240,13 +253,19 @@ main {
     inset: 0;
     pointer-events: none;
     z-index: -1;
+    overflow: hidden;
+    will-change: transform;
 }
 
 .starfield {
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    /* Extra height gives the field room to scroll up under parallax without
+       exposing empty space at the bottom of the viewport. */
+    height: 200%;
     pointer-events: none;
-    overflow: hidden;
     color: var(--color-neon);
     z-index: 0;
 }
@@ -363,8 +382,8 @@ main {
 
 /* ----- About the Team ----- */
 .about-team {
-    width: 55vw;
-    max-width: 55vw;
+    width: var(--content-width);
+    max-width: var(--content-width);
     margin: clamp(3rem, 8vh, 6rem) auto 0;
     padding: 0;
 }
@@ -446,11 +465,14 @@ main {
     width: 100%;
     padding: 0 0 var(--space-md);
     margin-top: var(--space-lg);
+    border-top: 1px solid rgba(133, 167, 201, 0.15);
 }
 
 .footer-inner {
-    width: 100%;
-    padding: var(--space-lg) var(--space-lg) 0;
+    width: var(--content-width);
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-lg) 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
