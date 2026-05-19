@@ -11,28 +11,17 @@
     user-select: none;
 }
 
+/* Inherits base styles from .section-title (style.css); overrides for centered variant. */
 .slideshow-title {
     margin: 0 0 1.5rem;
     text-align: center;
-    color: var(--color-text, #fff);
-    font-family: var(--font-display);
-    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    position: relative;
-    padding-bottom: 0.5rem;
 }
 
 .slideshow-title::after {
-    content: "";
-    position: absolute;
     left: 50%;
-    bottom: 0;
+    right: auto;
     width: 3em;
-    height: 3px;
-    background-color: var(--color-secondary, #335BC7);
     transform: translateX(-50%);
-    border-radius: 2px;
 }
 
 .slideshow-viewport {
@@ -99,7 +88,7 @@
 }
 
 .slideshow-caption {
-    color: var(--color-text, #fff);
+    color: var(--color-text);
     font-size: 0.95rem;
     font-weight: 400;
     text-align: center;
@@ -108,31 +97,8 @@
     letter-spacing: 0.02em;
 }
 
-.slideshow-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1.25rem;
-    border: 1.5px solid var(--color-tertiary, #85A7C9);
-    border-radius: 8px;
-    background-color: transparent;
-    color: var(--color-text, #fff);
-    font-size: 0.95rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    text-align: center;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: background-color 250ms ease, border-color 250ms ease;
-}
-
-.slideshow-button:hover,
-.slideshow-button:focus-visible {
-    background-color: var(--color-tertiary, #85A7C9);
-    border-color: var(--color-tertiary, #85A7C9);
-    outline: none;
-}
+/* Visual styling comes from .btn-outline (style.css). The .slideshow-button class
+   remains as a layout/selector hook for the carousel transition reset. */
 
 .slideshow-frame {
     width: 100%;
@@ -146,7 +112,7 @@
 
 .slideshow-slide.is-active .slideshow-frame {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28),
-                0 0 0 2px var(--color-secondary, #335BC7);
+                0 0 0 2px var(--color-secondary);
 }
 
 .slideshow-frame-link {
@@ -175,7 +141,7 @@
 .slideshow-frame:has(.slideshow-frame-link:hover),
 .slideshow-frame:has(.slideshow-frame-link:focus-visible) {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.32),
-                0 0 0 2px var(--color-tertiary, #85A7C9);
+                0 0 0 2px var(--color-tertiary);
 }
 
 .slideshow-controls {
@@ -190,9 +156,9 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid var(--color-tertiary, #85A7C9);
+    border: 1px solid var(--color-tertiary);
     background-color: transparent;
-    color: var(--color-text, #fff);
+    color: var(--color-text);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -202,8 +168,8 @@
 }
 
 .slideshow-arrow:hover {
-    background-color: var(--color-secondary, #335BC7);
-    border-color: var(--color-secondary, #335BC7);
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
     transform: scale(1.05);
 }
 
@@ -224,7 +190,7 @@
     border-radius: 50%;
     border: none;
     padding: 0;
-    background-color: var(--color-tertiary, #85A7C9);
+    background-color: var(--color-tertiary);
     opacity: 0.5;
     cursor: pointer;
     transition: opacity 200ms ease, background-color 200ms ease, transform 200ms ease;
@@ -235,7 +201,7 @@
 }
 
 .slideshow-dot.is-active {
-    background-color: var(--color-secondary, #335BC7);
+    background-color: var(--color-secondary);
     opacity: 1;
     transform: scale(1.2);
 }
@@ -259,6 +225,6 @@
 
     .slideshow-slide.is-active .slideshow-frame {
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28),
-                    0 0 0 2px var(--color-secondary, #335BC7);
+                    0 0 0 2px var(--color-secondary);
     }
 }

@@ -10,24 +10,30 @@
 
     if (!track || !dotsContainer || !prevBtn || !nextBtn || !root) return;
 
-    const dataEl = root.querySelector('.slideshow-data');
-    let SLIDES = [];
-    if (dataEl) {
-        try {
-            SLIDES = JSON.parse(dataEl.textContent);
-        } catch (e) {
-            console.warn('Slideshow: invalid JSON in .slideshow-data', e);
-        }
-    }
-    if (!SLIDES.length) return;
-
-    const total = SLIDES.length;
     // DOM layout: [clone(-2), clone(-1), slide0..slideN-1, clone(+1), clone(+2)]
     // realIndex is the DOM position of the centered slide. At rest it sits in [BUFFER, BUFFER + total - 1].
+    let SLIDES = [];
+    let total = 0;
     let currentIndex = 0;
     let realIndex = BUFFER;
     let isAnimating = false;
     let autoScrollTimer = null;
+
+    async function loadSlides() {
+        const src = root.dataset.slidesSrc;
+        if (!src) return [];
+        // Resolve against document.baseURI so subpath deploys (e.g. GitHub Pages under /repo-name/) work.
+        const bodyRoot = document.body.dataset.root || '';
+        const url = new URL(`${bodyRoot}${src}`, document.baseURI).href;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return await response.json();
+        } catch (e) {
+            console.warn('Slideshow: failed to load slides', e);
+            return [];
+        }
+    }
 
     function buildSlide(slide) {
         const el = document.createElement('div');
@@ -54,7 +60,7 @@
         caption.textContent = slide.caption || '';
 
         const button = document.createElement('a');
-        button.className = 'slideshow-button';
+        button.className = 'btn-outline slideshow-button';
         button.href = slide.link || '#';
         button.textContent = 'More Info';
 
@@ -227,7 +233,11 @@
         return Promise.all(pending);
     }
 
-    function init() {
+    async function init() {
+        SLIDES = await loadSlides();
+        if (!SLIDES.length) return;
+        total = SLIDES.length;
+
         buildTrack();
         buildDots();
         applyTransform(false);

@@ -294,8 +294,7 @@ main {
 .star {
     --rot: 0deg;
     --star-alpha: 1;
-    -webkit-mask-image: url('/images/svg/star.svg');
-    mask-image: url('/images/svg/star.svg');
+    /* mask-image is set inline by js/stars.js so subpath deploys (e.g. GitHub Pages) resolve correctly. */
     opacity: 0;
     transform: translate(-50%, -50%) rotate(var(--rot)) scale(0.6);
     animation: star-twinkle-in 1200ms ease-out both;
@@ -309,8 +308,7 @@ main {
 
 .shooting-star {
     --angle: 0deg;
-    -webkit-mask-image: url('/images/svg/shooting-star.svg');
-    mask-image: url('/images/svg/shooting-star.svg');
+    /* mask-image is set inline by js/stars.js so subpath deploys (e.g. GitHub Pages) resolve correctly. */
     opacity: 0;
     /* Head is at top-left of the sprite; streak moves down-right.
        Start offset up-and-left so it slides into final position. */
@@ -387,27 +385,20 @@ main {
     }
 }
 
-/* ----- About the Team ----- */
-.about-team {
-    width: var(--content-width);
-    max-width: var(--content-width);
-    margin: clamp(6rem, 16vh, 12rem) auto 0;
-    padding: 0;
-}
-
-.about-team-title {
+/* ----- Section title (shared) ----- */
+.section-title {
     margin: 0;
-    text-align: left;
     color: var(--color-text);
     font-family: var(--font-display);
     font-size: clamp(1.75rem, 3.4vw, 2.5rem);
     font-weight: 400;
     letter-spacing: 0.04em;
+    text-align: left;
     position: relative;
     padding-bottom: 0.5rem;
 }
 
-.about-team-title::after {
+.section-title::after {
     content: "";
     position: absolute;
     left: 0;
@@ -416,6 +407,14 @@ main {
     height: 3px;
     background-color: var(--color-secondary);
     border-radius: 2px;
+}
+
+/* ----- About the Team ----- */
+.about-team {
+    width: var(--content-width);
+    max-width: var(--content-width);
+    margin: clamp(6rem, 16vh, 12rem) auto 0;
+    padding: 0;
 }
 
 .about-team-grid {
@@ -434,10 +433,41 @@ main {
 .about-team-image  { grid-area: image; align-self: start; }
 .about-team-text   { grid-area: text; display: flex; flex-direction: column; align-items: flex-end; gap: 1.25rem; }
 
-.about-team-text p { align-self: stretch; }
+.about-team-text p {
+    align-self: stretch;
+    margin: 0;
+    color: var(--color-text);
+    line-height: 1.6;
+    font-size: 1rem;
+    text-align: justify;
+    hyphens: auto;
+}
+
+.about-team-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
 @media (max-width: 768px) {
-    .about-team-text { align-items: center; }
+    .about-team {
+        width: 90vw;
+        max-width: 90vw;
+    }
+    .about-team-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        grid-template-areas:
+            "title"
+            "image"
+            "text";
+        gap: 1.5rem;
+    }
+    .about-team-text {
+        align-items: center;
+    }
 }
 
 /* Reusable outline button (matches the slideshow's Game Page button). */
@@ -477,25 +507,6 @@ main {
 
 .team-page-title {
     margin: 0 0 2rem;
-    text-align: left;
-    color: var(--color-text);
-    font-family: var(--font-display);
-    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    position: relative;
-    padding-bottom: 0.5rem;
-}
-
-.team-page-title::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 3px;
-    background-color: var(--color-secondary);
-    border-radius: 2px;
 }
 
 .team-grid {
@@ -565,39 +576,6 @@ main {
     }
     .team-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
-}
-
-.about-team-text p {
-    margin: 0;
-    color: var(--color-text);
-    line-height: 1.6;
-    font-size: 1rem;
-    text-align: justify;
-    hyphens: auto;
-}
-
-.about-team-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-@media (max-width: 768px) {
-    .about-team {
-        width: 90vw;
-        max-width: 90vw;
-    }
-    .about-team-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        grid-template-areas:
-            "title"
-            "image"
-            "text";
         gap: 1.5rem;
     }
 }

@@ -24,17 +24,8 @@
             </div>
         </section>
 
-        <section class="slideshow" aria-roledescription="carousel" aria-label="Featured games">
-            <h2 class="slideshow-title">OUR GAMES</h2>
-
-            <script type="application/json" class="slideshow-data">
-            [
-                { "src": "images/game-posters/Signal-link-Poster-Reduced.png", "alt": "Signal Link", "caption": "Connect the a destroyed world with your robot partner.", "link": "Games-Posts/template-game.html" },
-                { "src": "images/game-posters/DockingBay_Poster_Warm_Wide.png", "alt": "[Docking Bay]", "caption": "Figure out who is who and to make sure to report abnormal readings.", "link": "Games-Posts/template-game.html" },
-                { "src": "images/game-posters/16_9 shot.png", "alt": "Cleanup Crew", "caption": "destroy the robotic swarm and retake back earth", "link": "Games-Posts/template-game.html" },
-                { "src": "images/misc/Placeholder.jpg", "alt": "Idol of Ashes", "caption": "Idol of Ashes placeholder", "link": "Games-Posts/template-game.html" }
-            ]
-            </script>
+        <section class="slideshow" aria-roledescription="carousel" aria-label="Featured games" data-slides-src="json/games.json">
+            <h2 class="section-title slideshow-title">OUR GAMES</h2>
 
             <div class="slideshow-viewport">
                 <div class="slideshow-track" id="slideshow-track"></div>
@@ -53,7 +44,7 @@
 
         <section class="about-team">
             <div class="about-team-grid">
-                <h2 class="about-team-title">About the Team</h2>
+                <h2 class="section-title about-team-title">About the Team</h2>
                 <div class="about-team-image">
                     <img src="images/misc/Placeholder.jpg" alt="The Laguna team">
                 </div>
