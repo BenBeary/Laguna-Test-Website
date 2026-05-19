@@ -15,6 +15,13 @@ const HEADER_HTML = `
                     <span class="nav-close-bar"></span>
                 </button>
                 <a href="{{root}}index.html" data-page="home">Home</a>
+                <div class="nav-dropdown" data-page="games">
+                    <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+                        Games
+                        <span class="nav-dropdown-caret" aria-hidden="true"></span>
+                    </button>
+                    <ul class="nav-dropdown-menu" role="menu"></ul>
+                </div>
                 <a href="{{root}}blog-home.html" data-page="blog">Blog</a>
                 <a href="{{root}}team.html" data-page="team">Meet The Team</a>
             </nav>
@@ -61,10 +68,12 @@ function injectPartials() {
     if (headerSlot) {
         headerSlot.outerHTML = render(HEADER_HTML);
         if (currentPage) {
-            const link = document.querySelector(`.site-nav a[data-page="${currentPage}"]`);
+            const link = document.querySelector(`.site-nav [data-page="${currentPage}"]`);
             if (link) link.classList.add('active');
         }
         wireNavToggle();
+        wireDropdowns();
+        loadGamesDropdown(root);
     }
 
     if (footerSlot) {
@@ -109,6 +118,55 @@ function loadSocialIcons(root) {
         } catch (e) {
             console.warn(`Failed to load icon: ${name}`, e);
         }
+    });
+}
+
+async function loadGamesDropdown(root) {
+    const menu = document.querySelector('.nav-dropdown[data-page="games"] .nav-dropdown-menu');
+    if (!menu) return;
+    const url = new URL(`${root}json/games.json`, document.baseURI).href;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const games = await response.json();
+        menu.innerHTML = games.map(g => {
+            const href = new URL(`${root}${g.link}`, document.baseURI).href;
+            const name = (g.alt || '').replace(/^\[|\]$/g, '');
+            return `<li role="none"><a role="menuitem" href="${href}">${name}</a></li>`;
+        }).join('');
+    } catch (e) {
+        console.warn('Failed to load games.json for nav dropdown', e);
+    }
+}
+
+function wireDropdowns() {
+    document.querySelectorAll('.nav-dropdown').forEach(dd => {
+        const toggle = dd.querySelector('.nav-dropdown-toggle');
+        if (!toggle) return;
+
+        const close = () => {
+            dd.classList.remove('is-open');
+            toggle.setAttribute('aria-expanded', 'false');
+        };
+        const open = () => {
+            dd.classList.add('is-open');
+            toggle.setAttribute('aria-expanded', 'true');
+        };
+
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (dd.classList.contains('is-open')) close(); else open();
+        });
+
+        // Close on outside click.
+        document.addEventListener('click', (e) => {
+            if (!dd.contains(e.target)) close();
+        });
+
+        // Close on Escape.
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') close();
+        });
     });
 }
 
