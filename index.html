@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laguna Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Finlandica+Text:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/slideshow.css">
+</head>
+<body data-page="home" data-root="">
+    <div id="site-header"></div>
+
+    <main>
+        <section class="hero-logo" aria-label="Laguna Games">
+            <div class="logo-stack">
+                <img src="images/svg/laguna_logo_Bottom.svg" alt="" class="logo-layer logo-bottom" aria-hidden="true">
+                <img src="images/svg/laguna_logo_Top.svg" alt="Laguna Games" class="logo-layer logo-top">
+            </div>
+        </section>
+
+        <section class="slideshow" aria-roledescription="carousel" aria-label="Featured games">
+            <h2 class="slideshow-title">OUR GAMES</h2>
+
+            <script type="application/json" class="slideshow-data">
+            [
+                { "src": "images/game-posters/Signal-link-Poster-Reduced.png", "alt": "Signal Link", "caption": "Connect the a destroyed world with your robot partner.", "link": "https://benbeary.itch.io/signal-link" },
+                { "src": "images/game-posters/DockingBay_Poster_Warm_Wide.png", "alt": "[Docking Bay]", "caption": "Figure out who is who and to make sure to report abnormal readings.", "link": "https://zorzini.itch.io/dockingbay" },
+                { "src": "images/game-posters/16_9 shot.png", "alt": "Cleanup Crew", "caption": "destroy the robotic swarm and retake back earth", "link": "https://benbeary.itch.io/cleanup-crew" },
+                { "src": "images/misc/Placeholder-16-by-9.jpg", "alt": "Idol of Ashes", "caption": "Idol of Ashes placeholder", "link": "https://zorzini.itch.io/idol-of-ashes" }
+            ]
+            </script>
+
+            <div class="slideshow-viewport">
+                <div class="slideshow-track" id="slideshow-track"></div>
+            </div>
+
+            <div class="slideshow-controls">
+                <button class="slideshow-arrow slideshow-arrow-prev" id="slideshow-prev" aria-label="Previous slide">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="slideshow-dots" id="slideshow-dots" role="tablist"></div>
+                <button class="slideshow-arrow slideshow-arrow-next" id="slideshow-next" aria-label="Next slide">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="js/partials.js"></script>
+    <script src="js/stars.js"></script>
+    <script src="js/slideshow.js"></script>
+</body>
+</html>
