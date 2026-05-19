@@ -22,7 +22,7 @@ const HEADER_HTML = `
                     </button>
                     <ul class="nav-dropdown-menu" role="menu"></ul>
                 </div>
-                <a href="{{root}}blog-home.html" data-page="blog">Blog</a>
+                <a href="{{root}}news-home.html" data-page="news">News</a>
                 <a href="{{root}}team.html" data-page="team">Meet The Team</a>
             </nav>
         </div>
@@ -70,6 +70,12 @@ function injectPartials() {
         if (currentPage) {
             const link = document.querySelector(`.site-nav [data-page="${currentPage}"]`);
             if (link) link.classList.add('active');
+        }
+        // Highlight the Games dropdown when on a game subpage (data-page="game"
+        // on its body, or any page under Games-Posts/).
+        if (currentPage === 'game' || /\/Games-Posts\//i.test(window.location.pathname)) {
+            const gamesDropdown = document.querySelector('.nav-dropdown[data-page="games"]');
+            if (gamesDropdown) gamesDropdown.classList.add('active');
         }
         wireNavToggle();
         wireDropdowns();
