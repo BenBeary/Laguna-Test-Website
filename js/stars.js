@@ -113,7 +113,9 @@
         // Note: .starfield is 200% tall (for parallax headroom), so these
         // percentages must stay small to keep shooting stars near the top
         // of the visible viewport.
-        el.style.left = `${randomBetween(8, 80)}%`;
+        // Avoid the central 10vw of the viewport (roughly 45%–55% of host
+        // width) so shooting stars don't streak straight through the logo.
+        el.style.left = `${Math.random() < 0.5 ? randomBetween(8, 45) : randomBetween(55, 92)}%`;
         el.style.top = `${randomBetween(4, 22)}%`;
         // Streak length controls size.
         const size = randomBetween(28, 56);

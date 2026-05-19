@@ -199,6 +199,11 @@ a {
 .nav-close-bar:last-child  { transform: translateY(-50%) rotate(-45deg); }
 
 @media (max-width: 768px) {
+    .header-inner {
+        width: 90vw;
+        max-width: 90vw;
+    }
+
     .nav-toggle {
         display: inline-flex;
     }
@@ -384,7 +389,7 @@ main {
 .about-team {
     width: var(--content-width);
     max-width: var(--content-width);
-    margin: clamp(3rem, 8vh, 6rem) auto 0;
+    margin: clamp(6rem, 16vh, 12rem) auto 0;
     padding: 0;
 }
 
@@ -425,7 +430,142 @@ main {
 
 .about-team-title  { grid-area: title; }
 .about-team-image  { grid-area: image; align-self: start; }
-.about-team-text   { grid-area: text; }
+.about-team-text   { grid-area: text; display: flex; flex-direction: column; align-items: flex-end; gap: 1.25rem; }
+
+.about-team-text p { align-self: stretch; }
+
+@media (max-width: 768px) {
+    .about-team-text { align-items: center; }
+}
+
+/* Reusable outline button (matches the slideshow's Game Page button). */
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.25rem;
+    border: 1.5px solid var(--color-tertiary);
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--color-text);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 250ms ease, border-color 250ms ease;
+}
+
+.btn-outline:hover,
+.btn-outline:focus-visible {
+    background-color: var(--color-tertiary);
+    border-color: var(--color-tertiary);
+    outline: none;
+}
+
+/* ----- Team page ----- */
+.team-page {
+    width: var(--content-width);
+    max-width: var(--content-width);
+    margin: clamp(2rem, 6vh, 4rem) auto;
+    padding: 0;
+}
+
+.team-page-title {
+    margin: 0 0 2rem;
+    text-align: left;
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.team-page-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background-color: var(--color-secondary);
+    border-radius: 2px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 240px));
+    gap: 2rem;
+    justify-content: center;
+}
+
+.team-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+}
+
+.team-card-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.team-card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.team-card-name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--color-text);
+    letter-spacing: 0.03em;
+}
+
+.team-card-roles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.role-tag {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    background-color: rgba(133, 167, 201, 0.15);
+    border: 1px solid rgba(133, 167, 201, 0.3);
+    color: var(--color-text);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .team-page {
+        width: 90vw;
+        max-width: 90vw;
+    }
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
 
 .about-team-text p {
     margin: 0;
@@ -529,13 +669,13 @@ main {
 
 @media (max-width: 768px) {
     .social-icon {
-        width: 40px;
-        height: 40px;
+        width: 48px;
+        height: 48px;
     }
 
     .social-icon svg {
-        width: 26px;
-        height: 26px;
+        width: 32px;
+        height: 32px;
     }
 }
 

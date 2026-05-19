@@ -16,6 +16,7 @@ const HEADER_HTML = `
                 </button>
                 <a href="{{root}}index.html" data-page="home">Home</a>
                 <a href="{{root}}blog-home.html" data-page="blog">Blog</a>
+                <a href="{{root}}team.html" data-page="team">Meet The Team</a>
             </nav>
         </div>
     </header>
