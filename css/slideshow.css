@@ -149,12 +149,33 @@
                 0 0 0 2px var(--color-secondary, #335BC7);
 }
 
+.slideshow-frame-link {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    outline: none;
+}
+
 .slideshow-frame img {
     width: 100%;
     height: 100%;
     object-fit: fill;
     display: block;
-    pointer-events: none;
+    transition: transform 350ms ease, filter 350ms ease;
+}
+
+.slideshow-frame-link:hover img,
+.slideshow-frame-link:focus-visible img {
+    transform: scale(1.06);
+    filter: brightness(1.12);
+}
+
+.slideshow-frame:has(.slideshow-frame-link:hover),
+.slideshow-frame:has(.slideshow-frame-link:focus-visible) {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.32),
+                0 0 0 2px var(--color-tertiary, #85A7C9);
 }
 
 .slideshow-controls {

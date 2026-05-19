@@ -35,11 +35,16 @@
 
         const frame = document.createElement('div');
         frame.className = 'slideshow-frame';
+        const link = document.createElement('a');
+        link.className = 'slideshow-frame-link';
+        link.href = slide.link || '#';
+        link.setAttribute('aria-label', slide.alt || 'Open game page');
         const img = document.createElement('img');
         img.src = slide.src;
         img.alt = slide.alt;
         img.draggable = false;
-        frame.appendChild(img);
+        link.appendChild(img);
+        frame.appendChild(link);
 
         const meta = document.createElement('div');
         meta.className = 'slideshow-meta';
@@ -51,7 +56,7 @@
         const button = document.createElement('a');
         button.className = 'slideshow-button';
         button.href = slide.link || '#';
-        button.textContent = 'Game Page';
+        button.textContent = 'More Info';
 
         meta.appendChild(caption);
         meta.appendChild(button);
