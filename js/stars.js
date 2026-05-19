@@ -14,6 +14,12 @@
     const STREAK_DURATION_MS = 1400;
     const STREAK_DELAY_BASE_MS = 550; // matches bob start
 
+    // Resolve mask SVG URLs against the page base so subpath deploys (e.g.
+    // GitHub Pages under /repo-name/) work the same as a root deploy.
+    const ROOT = document.body.dataset.root || '';
+    const STAR_URL = new URL(`${ROOT}images/svg/star.svg`, document.baseURI).href;
+    const SHOOTING_STAR_URL = new URL(`${ROOT}images/svg/shooting-star.svg`, document.baseURI).href;
+
     const containers = document.querySelectorAll('.hero-logo, .starfield-host');
     if (!containers.length) return;
     containers.forEach(populate);
@@ -44,6 +50,8 @@
     function makeStar() {
         const el = document.createElement('span');
         el.className = 'star';
+        el.style.webkitMaskImage = `url('${STAR_URL}')`;
+        el.style.maskImage = `url('${STAR_URL}')`;
         // Position: anywhere in the hero block.
         el.style.left = `${randomBetween(2, 98)}%`;
         el.style.top = `${randomBetween(2, 95)}%`;
@@ -65,6 +73,8 @@
     function makeShootingStar(index) {
         const el = document.createElement('span');
         el.className = 'shooting-star';
+        el.style.webkitMaskImage = `url('${SHOOTING_STAR_URL}')`;
+        el.style.maskImage = `url('${SHOOTING_STAR_URL}')`;
         // Spread them across the top half, biased to the upper region of the hero.
         el.style.left = `${randomBetween(8, 80)}%`;
         // Final resting top position (after the streak lands).

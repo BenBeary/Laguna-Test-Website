@@ -2,7 +2,7 @@ const HEADER_HTML = `
     <header class="site-header">
         <div class="header-inner">
             <a href="{{root}}index.html" class="site-title" aria-label="Laguna Games home">
-                <span class="site-logo" role="img" aria-label="Laguna Games" style="--logo-url: url('/images/svg/laguna_logo_Long.svg')"></span>
+                <span class="site-logo" role="img" aria-label="Laguna Games"></span>
             </a>
             <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
                 <span class="nav-toggle-bar"></span>
@@ -34,7 +34,7 @@ const FOOTER_HTML = `
         <div class="footer-inner">
             <div class="footer-row">
                 <a href="{{root}}index.html" class="site-title" aria-label="Laguna Games home">
-                    <span class="site-logo" role="img" aria-label="Laguna Games" style="--logo-url: url('/images/svg/laguna_logo_Long.svg')"></span>
+                    <span class="site-logo" role="img" aria-label="Laguna Games"></span>
                 </a>
                 <div class="footer-socials" aria-label="Social media">
                     ${SOCIAL_LINKS.map(s => `
@@ -71,7 +71,18 @@ function injectPartials() {
         loadSocialIcons(root);
     }
 
+    setLogoUrls(root);
+
     document.dispatchEvent(new CustomEvent('partials:ready'));
+}
+
+function setLogoUrls(root) {
+    // Resolve against document.baseURI so subpath deploys (e.g. GitHub Pages
+    // serving under /repo-name/) produce a valid absolute URL.
+    const logoUrl = new URL(`${root}images/svg/laguna_logo_Long.svg`, document.baseURI).href;
+    document.querySelectorAll('.site-logo').forEach(el => {
+        el.style.setProperty('--logo-url', `url('${logoUrl}')`);
+    });
 }
 
 const ICON_CACHE = new Map();
